@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios.ts'
 
-interface ManagedRestaurant {
+export interface ManagedRestaurant {
   id: string
   managerId: string | null
   name: string
