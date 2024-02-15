@@ -1,11 +1,19 @@
+import { formatDistanceToNow } from 'date-fns'
 import { ArrowRight, Search, X } from 'lucide-react'
 
+import { Order } from '@/api/get-orders.ts'
+import OrderStatus from '@/components/OrderStatus.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog.tsx'
 import { TableCell, TableRow } from '@/components/ui/table.tsx'
+import { formatCurrency } from '@/lib/utils.ts'
 import OrderDetails from '@/pages/app/orders/OrderDetails.tsx'
 
-export default function OrderTableRow() {
+interface OrderTableRowProps {
+  order: Order
+}
+
+export default function OrderTableRow({ order }: OrderTableRowProps) {
   return (
     <TableRow>
       <TableCell>
@@ -21,20 +29,23 @@ export default function OrderTableRow() {
         </Dialog>
       </TableCell>
 
-      <TableCell className="font-mono text-xs font-medium">12</TableCell>
-
-      <TableCell className="text-muted-foreground">15 minutes ago</TableCell>
-
-      <TableCell>
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-slate-400" />
-          <span className="font-medium text-muted-foreground">Pending</span>
-        </div>
+      <TableCell className="font-mono text-xs font-medium">
+        {order.orderId}
       </TableCell>
 
-      <TableCell className="font-medium">Jeff Gouveia</TableCell>
+      <TableCell className="text-muted-foreground">
+        {formatDistanceToNow(order.createdAt, { addSuffix: true })}
+      </TableCell>
 
-      <TableCell className="font-medium">R$ 149,90</TableCell>
+      <TableCell>
+        <OrderStatus status={order.status} />
+      </TableCell>
+
+      <TableCell className="font-medium">{order.customerName}</TableCell>
+
+      <TableCell className="font-medium">
+        {formatCurrency(order.total)}
+      </TableCell>
 
       <TableCell>
         <Button variant="outline" size="xs">
