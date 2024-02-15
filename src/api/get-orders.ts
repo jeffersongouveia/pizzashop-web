@@ -16,6 +16,9 @@ export interface Meta {
 
 export interface GetOrdersRequest {
   pageIndex: number
+  orderId?: string | null
+  customerName?: string | null
+  status?: string | null
 }
 
 export interface GetOrdersResponse {
@@ -25,7 +28,10 @@ export interface GetOrdersResponse {
 
 export default async function getOrders(props: GetOrdersRequest) {
   const { data } = await api.get<GetOrdersResponse>('/orders', {
-    params: props,
+    params: {
+      ...props,
+      status: props.status === 'all' ? null : props.status,
+    },
   })
 
   return data
