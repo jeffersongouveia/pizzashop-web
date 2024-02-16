@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from 'date-fns'
 import { ArrowRight, Search, X } from 'lucide-react'
+import { useState } from 'react'
 
 import { Order } from '@/api/get-orders.ts'
 import OrderStatus from '@/components/OrderStatus.tsx'
@@ -14,10 +15,12 @@ interface OrderTableRowProps {
 }
 
 export default function OrderTableRow({ order }: OrderTableRowProps) {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="xs">
               <Search className="h-3 w-3" />
@@ -25,7 +28,7 @@ export default function OrderTableRow({ order }: OrderTableRowProps) {
             </Button>
           </DialogTrigger>
 
-          <OrderDetails />
+          <OrderDetails orderId={order.orderId} isOpen={isDetailsOpen} />
         </Dialog>
       </TableCell>
 
@@ -44,7 +47,7 @@ export default function OrderTableRow({ order }: OrderTableRowProps) {
       <TableCell className="font-medium">{order.customerName}</TableCell>
 
       <TableCell className="font-medium">
-        {formatCurrency(order.total)}
+        {formatCurrency(order.total / 100)}
       </TableCell>
 
       <TableCell>
