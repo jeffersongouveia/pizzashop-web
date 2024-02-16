@@ -1,13 +1,24 @@
+import { useQuery } from '@tanstack/react-query'
 import { Utensils } from 'lucide-react'
 
+import getMonthOrdersAmount from '@/api/get-month-orders-amount.ts'
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx'
+import { formatCurrency } from '@/lib/utils.ts'
 
 export default function CardMonthOrdersAmount() {
+  const { data } = useQuery({
+    queryKey: ['metrics', 'month-orders-amount'],
+    queryFn: getMonthOrdersAmount,
+  })
+
+  const color = data && data.diffFromLastMonth < 0 ? 'rose' : 'emerald'
+  const style = `text-${color}-500 dark:text-${color}-400`
+
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
@@ -18,12 +29,21 @@ export default function CardMonthOrdersAmount() {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">240</span>
+        {data && (
+          <>
+            <span className="text-2xl font-bold tracking-tight">
+              {formatCurrency(data.amount)}
+            </span>
 
-        <p className="text-xs text-muted-foreground">
-          <span className="text-emerald-500 dark:text-emerald-400">+6%</span>{' '}
-          compared to last month
-        </p>
+            <p className="text-xs text-muted-foreground">
+              <span className={style}>
+                {data.diffFromLastMonth > 0 ? '+' : ''}
+                {data.diffFromLastMonth}%
+              </span>{' '}
+              compared to last month
+            </p>
+          </>
+        )}
       </CardContent>
     </Card>
   )

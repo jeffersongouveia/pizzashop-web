@@ -1,13 +1,24 @@
+import { useQuery } from '@tanstack/react-query'
 import { Utensils } from 'lucide-react'
 
+import getDayOrdersAmount from '@/api/get-day-orders-amount.ts'
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx'
+import { formatCurrency } from '@/lib/utils.ts'
 
 export default function CardDayOrdersAmount() {
+  const { data } = useQuery({
+    queryKey: ['metrics', 'day-orders-amount'],
+    queryFn: getDayOrdersAmount,
+  })
+
+  const color = data && data.diffFromYesterday < 0 ? 'rose' : 'emerald'
+  const style = `text-${color}-500 dark:text-${color}-400`
+
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
@@ -16,12 +27,21 @@ export default function CardDayOrdersAmount() {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">11</span>
+        {data && (
+          <>
+            <span className="text-2xl font-bold tracking-tight">
+              {formatCurrency(data.amount)}
+            </span>
 
-        <p className="text-xs text-muted-foreground">
-          <span className="text-rose-500 dark:text-rose-400">-3%</span> compared
-          to yesterday
-        </p>
+            <p className="text-xs text-muted-foreground">
+              <span className={style}>
+                {data.diffFromYesterday > 0 ? '+' : ''}
+                {data.diffFromYesterday}%
+              </span>{' '}
+              compared to yesterday
+            </p>
+          </>
+        )}
       </CardContent>
     </Card>
   )
