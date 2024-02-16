@@ -58,8 +58,8 @@ export default function Orders() {
                 <TableHead className="w-[140px]">Status</TableHead>
                 <TableHead>Client</TableHead>
                 <TableHead className="w-[140px]">Total order</TableHead>
-                <TableHead className="w-[164px]"></TableHead>
-                <TableHead className="w-[132px]"></TableHead>
+                <TableHead className="w-[164px]">Update status</TableHead>
+                <TableHead className="w-[132px]">Cancel</TableHead>
               </TableRow>
 
               <TableBody>

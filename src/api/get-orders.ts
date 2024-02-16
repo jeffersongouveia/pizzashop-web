@@ -1,9 +1,16 @@
 import { api } from '@/lib/axios.ts'
 
+export type Status =
+  | 'pending'
+  | 'processing'
+  | 'delivering'
+  | 'delivered'
+  | 'canceled'
+
 export interface Order {
   orderId: string
   customerName: string
-  status: 'pending' | 'processing' | 'delivering' | 'delivered' | 'canceled'
+  status: Status
   total: number
   createdAt: string
 }
