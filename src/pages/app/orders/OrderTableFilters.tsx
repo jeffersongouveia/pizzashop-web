@@ -29,6 +29,8 @@ export default function OrderTableFilters() {
   const customerName = searchParams.get('customerName')
   const status = searchParams.get('status')
 
+  const isFiltering = orderId || customerName || status
+
   const { register, handleSubmit, control, reset } = useForm<OrderFilters>({
     resolver: zodResolver(orderFiltersSchema),
     defaultValues: {
@@ -116,6 +118,7 @@ export default function OrderTableFilters() {
         type="button"
         variant="outline"
         size="xs"
+        className={!isFiltering ? 'hidden' : ''}
         onClick={handleClearFilters}
       >
         <X className="mr-2 h-4 w-4" />
