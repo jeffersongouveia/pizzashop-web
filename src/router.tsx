@@ -6,13 +6,14 @@ import Dashboard from '@/pages/app/dashboard/Dashboard.tsx'
 import Orders from '@/pages/app/orders/Orders.tsx'
 import SignIn from '@/pages/auth/SignIn.tsx'
 import SignUp from '@/pages/auth/SignUp.tsx'
+import Error from '@/pages/Error.tsx'
 import NotFound from '@/pages/NotFound.tsx'
 
 export default createBrowserRouter([
   {
     path: '/',
     element: <LayoutApp />,
-    errorElement: <NotFound />,
+    errorElement: <Error />,
     children: [
       { path: '/', element: <Dashboard /> },
       { path: '/orders', element: <Orders /> },
@@ -25,5 +26,9 @@ export default createBrowserRouter([
       { path: '/sign-in', element: <SignIn /> },
       { path: '/sign-up', element: <SignUp /> },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ])
