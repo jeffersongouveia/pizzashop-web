@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx'
 import { formatCurrency } from '@/lib/utils.ts'
+import MetricCardSkeleton from '@/pages/app/dashboard/MetricCardSkeleton.tsx'
 
 export default function CardMonthRevenue() {
   const { data } = useQuery({
@@ -29,7 +30,7 @@ export default function CardMonthRevenue() {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        {data && (
+        {data ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {formatCurrency(data.receipt / 100)}
@@ -43,6 +44,8 @@ export default function CardMonthRevenue() {
               compared to last month
             </p>
           </>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>
