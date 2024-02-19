@@ -11,6 +11,7 @@ import {
   TableHead,
   TableRow,
 } from '@/components/ui/table.tsx'
+import OrderTableSkeleton from '@/pages/app/orders/OrderTableSkeleton.tsx'
 
 import OrderTableFilters from './OrderTableFilters'
 import OrderTableRow from './OrderTableRow.tsx'
@@ -27,7 +28,7 @@ export default function Orders() {
     .transform((page) => page - 1)
     .parse(searchParams.get('page') ?? 1)
 
-  const { data: result } = useQuery({
+  const { data: result, isLoading } = useQuery({
     queryKey: ['orders', pageIndex, orderId, customerName, status],
     queryFn: () => getOrders({ pageIndex, orderId, customerName, status }),
   })
@@ -63,6 +64,8 @@ export default function Orders() {
               </TableRow>
 
               <TableBody>
+                {isLoading && <OrderTableSkeleton />}
+
                 {result &&
                   result.orders.map((order) => (
                     <OrderTableRow key={order.orderId} order={order} />
