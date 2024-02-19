@@ -19,6 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table.tsx'
 import { formatCurrency } from '@/lib/utils.ts'
+import OrderDetailsSkeleton from '@/pages/app/orders/OrderDetailsSkeleton.tsx'
 
 interface OrderDetailsProps {
   orderId: string
@@ -39,7 +40,7 @@ export default function OrderDetails({ orderId, isOpen }: OrderDetailsProps) {
         <DialogDescription>Order details</DialogDescription>
       </DialogHeader>
 
-      {order && (
+      {order ? (
         <div className="space-y-6">
           <Table>
             <TableBody>
@@ -117,6 +118,8 @@ export default function OrderDetails({ orderId, isOpen }: OrderDetailsProps) {
             </TableFooter>
           </Table>
         </div>
+      ) : (
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   )
