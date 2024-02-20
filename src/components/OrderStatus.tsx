@@ -13,7 +13,10 @@ export default function OrderStatus({ status }: OrderStatusProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className={`h-2 w-2 rounded-full ${statusColor[status]}`} />
+      <span
+        data-testid="badge"
+        className={`h-2 w-2 rounded-full ${statusColor[status]}`}
+      />
       <span className="font-medium capitalize text-muted-foreground">
         {status}
       </span>
