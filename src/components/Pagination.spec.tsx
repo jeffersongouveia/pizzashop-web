@@ -10,8 +10,8 @@ describe('Pagination', () => {
     onPageChangeCallback.mockClear()
   })
 
-  const renderPagination = (pageIndex: number) =>
-    render(
+  function renderPagination(pageIndex: number) {
+    return render(
       <Pagination
         pageIndex={pageIndex}
         perPage={10}
@@ -19,8 +19,9 @@ describe('Pagination', () => {
         onPageChange={onPageChangeCallback}
       />,
     )
+  }
 
-  const testNavigation = async (buttonName: string, expectedPage: number) => {
+  async function testNavigation(buttonName: string, expectedPage: number) {
     const user = userEvent.setup()
     const wrapper = renderPagination(5)
     const button = wrapper.getByRole('button', { name: buttonName })
