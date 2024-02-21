@@ -33,13 +33,17 @@ export default function SignUp() {
   })
 
   async function handleSignUp(data: SignUpForm) {
-    await registerNewRestaurant(data)
-    toast.success('Link for sign in sent to your email!', {
-      action: {
-        label: 'Sign in',
-        onClick: () => navigate(`/sign-in?email=${data.email}`),
-      },
-    })
+    try {
+      await registerNewRestaurant(data)
+      toast.success('Link for sign in sent to your email!', {
+        action: {
+          label: 'Sign in',
+          onClick: () => navigate(`/sign-in?email=${data.email}`),
+        },
+      })
+    } catch {
+      toast.error('Something went wrong.')
+    }
   }
 
   return (
