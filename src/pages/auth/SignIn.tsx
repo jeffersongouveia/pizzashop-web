@@ -32,8 +32,12 @@ export default function SignIn() {
   const { mutateAsync: authenticate } = useMutation({ mutationFn: signIn })
 
   async function handleSignIn(data: SignInForm) {
-    await authenticate(data)
-    toast.success('Link for sign in sent to your email!')
+    try {
+      await authenticate(data)
+      toast.success('Link for sign in sent to your email!')
+    } catch {
+      toast.error('Invalid credentials')
+    }
   }
 
   return (
