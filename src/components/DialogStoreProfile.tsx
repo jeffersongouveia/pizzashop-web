@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import getManagedRestaurant, {
-  ManagedRestaurant,
+  GetManagedRestaurantResponse,
 } from '@/api/get-managed-restaurant.ts'
 import updateProfile from '@/api/update-profile.ts'
 import { Button } from '@/components/ui/button.tsx'
@@ -63,7 +63,7 @@ export default function DialogStoreProfile() {
   })
 
   function updateManagedRestaurantCache(data: StoreProfileSchema) {
-    const cached = queryClient.getQueryData<ManagedRestaurant>([
+    const cached = queryClient.getQueryData<GetManagedRestaurantResponse>([
       'managed-restaurant',
     ])
 

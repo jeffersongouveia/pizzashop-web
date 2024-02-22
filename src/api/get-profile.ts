@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios.ts'
 
-interface Profile {
+export interface GetProfileResponse {
   id: string
   email: string
   name: string
@@ -11,6 +11,6 @@ interface Profile {
 }
 
 export default async function getProfile() {
-  const response = await api.get<Profile>('/me')
+  const response = await api.get<GetProfileResponse>('/me')
   return response.data
 }
