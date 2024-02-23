@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx'
+import { formatNumber } from '@/lib/utils.ts'
 import MetricCardSkeleton from '@/pages/app/dashboard/MetricCardSkeleton.tsx'
 
 export default function CardMonthCancelledOrdersAmount() {
@@ -20,7 +21,7 @@ export default function CardMonthCancelledOrdersAmount() {
   const style = `text-${color}-500 dark:text-${color}-400`
 
   return (
-    <Card>
+    <Card data-testid="cancellations-month">
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-semibold">
           Cancellations (month)
@@ -31,14 +32,17 @@ export default function CardMonthCancelledOrdersAmount() {
       <CardContent className="space-y-1">
         {data ? (
           <>
-            <span className="text-2xl font-bold tracking-tight">
-              {data.amount}
+            <span
+              data-testid="amount"
+              className="text-2xl font-bold tracking-tight"
+            >
+              {formatNumber(data.amount)}
             </span>
 
             <p className="text-xs text-muted-foreground">
-              <span className={style}>
+              <span data-testid="diff-from-last-month" className={style}>
                 {data.diffFromLastMonth > 0 ? '+' : ''}
-                {data.diffFromLastMonth}%
+                {formatNumber(data.diffFromLastMonth)}%
               </span>{' '}
               compared to last month
             </p>

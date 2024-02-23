@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx'
-import { formatCurrency } from '@/lib/utils.ts'
+import { formatCurrency, formatNumber } from '@/lib/utils.ts'
 import MetricCardSkeleton from '@/pages/app/dashboard/MetricCardSkeleton.tsx'
 
 export default function CardMonthRevenue() {
@@ -21,7 +21,7 @@ export default function CardMonthRevenue() {
   const style = `text-${color}-500 dark:text-${color}-400`
 
   return (
-    <Card>
+    <Card data-testid="total-revenue-month">
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-semibold">
           Total revenue (month)
@@ -32,14 +32,17 @@ export default function CardMonthRevenue() {
       <CardContent className="space-y-1">
         {data ? (
           <>
-            <span className="text-2xl font-bold tracking-tight">
+            <span
+              data-testid="receipt"
+              className="text-2xl font-bold tracking-tight"
+            >
               {formatCurrency(data.receipt / 100)}
             </span>
 
             <p className="text-xs text-muted-foreground">
-              <span className={style}>
+              <span data-testid="diff-from-last-month" className={style}>
                 {data.diffFromLastMonth > 0 ? '+' : ''}
-                {data.diffFromLastMonth}%
+                {formatNumber(data.diffFromLastMonth)}%
               </span>{' '}
               compared to last month
             </p>
